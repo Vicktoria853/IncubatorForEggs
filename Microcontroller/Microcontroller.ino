@@ -1,5 +1,9 @@
+
+
 #include <WiFi.h>
 #include <PubSubClient.h>
+#include <stdint.h>
+#include "Packet.h"
 
 
 const char* ssid = "VikiWIFI";
@@ -13,26 +17,7 @@ PubSubClient client(espClient);
 int sent = 0;
 long lastMsg = 0;
 char msg[20];
-
-
-/// temperature
-
-int ThermistorPin = 35;
-int Vo;
-float R1 = 10000;
-float logR2, R2, T;
-float c1 = 1.009249522e-03, c2 = 2.378405444e-04, c3 = 2.019202697e-07;
-//
-
-
-float getTemp(int TempPin,int R1){
-  Vo = analogRead(ThermistorPin);
-  R2 = R1 * (4095.0 / (float)Vo - 1.0);
-  logR2 = log(R2);
-  T = (1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2));
-  T = T - 273.15;
-  return T;
-  }
+Packet p(1, 2);
 
 
 
@@ -92,7 +77,7 @@ void loop() {
   long now = millis();
   if (now - lastMsg > 5000) {
     lastMsg = now;
-    float temp = getTemp(ThermistorPin, 10000);
+    float temp = 10;
     Serial.println(temp);
     snprintf (msg, 20, "%f", temp);
     /* publish the message */
