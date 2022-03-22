@@ -3,7 +3,7 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <stdint.h>
-#include "Packet.h"
+//#include "Packet.h"
 
 
 const char* ssid = "VikiWIFI";
@@ -17,7 +17,7 @@ PubSubClient client(espClient);
 int sent = 0;
 long lastMsg = 0;
 char msg[20];
-Packet p(1, 2);
+//Packet p(1, 2);
 
 
 

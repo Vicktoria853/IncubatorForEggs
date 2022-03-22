@@ -10,6 +10,8 @@ class Termometer{
     //float lastResult;
 
     float getTemp();
+    float calculateTemp(uint16_t tempAvg[20]);
+    uint8_t getVo();
   
  private:
      uint16_t Vo;
@@ -18,7 +20,8 @@ class Termometer{
      float c1;
      float c2;
      float c3;
-     float lastResult;
+     uint16_t helper;
+     //float lastResult;
       //
 
 };
