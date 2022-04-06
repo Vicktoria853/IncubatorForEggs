@@ -1,22 +1,30 @@
 
 
+
+
 #ifndef INCUBATOR_H
 #define INCUBATOR_H
 
 #include "Termometer.h"
+#include "Packet.h"
+#include <Wire.h>
 
-#include <DHT.h>
-#include <DHT_U.h>
+// SI7021 I2C address is 0x40(64)
+#define si7021Addr 0x40
 #define TIME 30000 // 30 s
+
 
 class Incubator{
   public:
-    Incubator(uint8_t dryPinTemp, uint8_t wetPinTemp, uint8_t dhtPin);
+    Incubator(uint8_t dryPinTemp, uint8_t wetPinTemp, uint8_t Heaterpin, uint8_t Fan);
     
     Termometer dryTemp;
     Termometer wetTemp;
+    Packet packet;
+    uint8_t pinHeater;
+    uint8_t pinFan;
 
-    DHT dht;
+    unsigned int data[2];
     float tempMode[22][5]; // avg, min, max, alarm- min max
     float humidMode[22][5]; // avg, min, max, alarm- min max
 
@@ -25,19 +33,21 @@ class Incubator{
     uint16_t tempAvg[20]; // every 30 sec 
     uint16_t humidTempAvg[20]; // every 30 sec 
 
-    float humidDHTAvg[20]; // every 30 sec from DHT
+    float humidSensorAvg[20]; // every 30 sec from Si7021
     float humidityAdded; // added by the customer
-    float humidityCurrent;
-    float tempCurrent;
-    float humidityDHTCurrent;
+
+
     //uint8_t positionEggs;
     //unsigned long doorOpen;
     //unsigned long doorClosed;
     unsigned long lastEggTurning;
     unsigned long lastStep;
 
+    float helper;
+
 
     void stepArg();
+    float readHumiditySensor();
     
 
   };
