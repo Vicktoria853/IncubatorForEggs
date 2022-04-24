@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 
 def on_connect(client, userdata, rc, properties=None):
     client.subscribe("test")
+    client.subscribe("Incubator")
 
 def on_message(client, username, msg):
     print("==begin==")
