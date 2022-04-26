@@ -18,5 +18,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('incubator', include('incubator.urls')),
+    path("incubator/", include("django.contrib.auth.urls"))
+    #path('incubator', include('incubator.urls')),
+    #path('incubator/login/ [name=\'login\']', include ('incubator.urls'))
+
 ]

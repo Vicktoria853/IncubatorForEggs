@@ -1,13 +1,28 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#from . import mqtt
 
+from django.http.response import JsonResponse
+import requests
 
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 
 
 def index(request):
-#    mqtt.client.loop_start()
-    return HttpResponse("Hello, world. You're at the polls index.")
-# Create your views here.
+    return HttpResponse("Hello, world.")
 
-#mqtt.client.loop_start()
+
+def my_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+
+    else:
+        pass
+
+def logout_view(request):
+    logout(request)
+
+
