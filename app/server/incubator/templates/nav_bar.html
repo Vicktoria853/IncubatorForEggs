@@ -1,17 +1,14 @@
 <style>
 .flex-container{
-	display:flex;
-	flex-direction: row;
-	justify-content: space-around;
-	background-color:grey;
-	padding: 20px;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+        background-color:grey;
+        padding: 20px;
 }
 
 body{
-	background-color: lightblue;
-
-
-
+        background-color: lightblue;
 }
 a{
 text-decoration:none;
@@ -22,20 +19,33 @@ size:15px;
 
 </style>
 
-
 <div class="flex-container">
-	<div>
-		<a href="/incubator"> Home</a>
-	</div>
-	<div>
-		<a href="/login"> Login </a>
-	</div>
-	<div>
-		<a href="/logout"> Logout</a>
-	</div>
-	<div>
+        <div>
+                <a href="/incubator"> Home</a>
+        </div>
+{% if user.is_authenticated %}
+        <div>
+                <a href="/logout"> Logout</a>
+        </div>
+{% else %}
 
-		<a href="/incubator/data">Data</a>
-
-	</div>
+        <div>
+                <a href="/login"> Login </a>
+        </div>
+{% endif %}
+        <div>
+                <a href="/incubator/packet">Data</a>
+        </div>
 </div>
+
+
+
+
+{% if user.is_authenticated %}
+<h2>Hello, {{ user.get_username }}</h2>
+
+{% else %}
+<h2>Hello!</h2>
+
+{% endif %}
+

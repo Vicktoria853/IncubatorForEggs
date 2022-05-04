@@ -1,5 +1,92 @@
-{% extends "nav_bar.html" %}
 
+<html>
+	<head>
+	<style>
+	table{
+	padding-top: 50px
+}
+	table, th, td {
+ 	 	/* border: 1px solid white;
+ 		 border-collapse: collapse; */
+	}
+	th, td {
+		  /* background-color: #96D4D4; */
+		  background-color: darkblue
+	}
+	</style>
+	</head>
+<body>
 
+</div>
+<style>
+.flex-container{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+        background-color:grey;
+        padding: 20px;
+}
 
-{{Seq}}
+body{
+        background-color: lightblue;
+}
+a{
+text-decoration:none;
+color:black;
+size:15px;
+
+}
+
+</style>
+
+<div class="flex-container">
+        <div>
+                <a href="/incubator"> Home</a>
+        </div>
+{% if user.is_authenticated %}
+        <div>
+                <a href="/logout"> Logout</a>
+        </div>
+{% else %}
+
+        <div>
+                <a href="/login"> Login </a>
+        </div>
+{% endif %}
+        <div>
+                <a href="/incubator/packet">Data</a>
+        </div>
+</div>
+<h2>Hello, {{user.get_username }}</h2>
+
+{% block content %}
+
+<table style="width: 100%; color:lightblue">
+    <tr style="height: 50px; width: 100px;color:grey">
+      <th>ID</th>
+      <th>TEMPERATURE</th>
+      <th>RH</th>
+      <th>RHSENSOR</th>
+      <th>EGG TURNED</th>
+      <th>INCUBATING TIME</th>
+      <th>RECIEVED</th>
+    </tr>
+
+{% for line in lines %}
+    <tr>
+        <th>{{ line.0 }}</th>
+        <th>{{ line.1 }}</th>
+        <th>{{ line.2 }}</th>
+        <th>{{ line.3 }}</th>
+        <th>{{ line.4 }}</th>
+        <th>{{ line.5 }}</th>
+        <th>{{ line.6 }}</th>
+
+    </tr>
+{% endfor %}
+    
+  </table>
+
+{% endblock %}
+</body>
+</html>

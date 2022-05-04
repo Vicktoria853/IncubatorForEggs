@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from rest_framework import serializers
 
 class PacketDate(models.Model):
     idInc = models.IntegerField()
@@ -16,14 +16,17 @@ class PacketDate(models.Model):
     def __str__(self):
         return ("#" + str(self.idInc) + " -  " + str(self.recieved.year) + "/" + str(self.recieved.month)+ "/" + str(self.recieved.day) + " " + str(self.recieved.hour) + ":" + str(self.recieved.minute) + ":" + str(self.recieved.second))
 
+class PacketDateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PacketDate
+        fields = ["idInc", "idSeq", "temperature", "rh", "rhSensor", "eggTurned", "incTime", "recieved"]
 
-#class User(models.Model):
-#    isAdmin = models.BooleanField()
-#    username = models.CharField(max_length=20)
-#    password = models.CharField(max_length=100)
-#
-#    def __str__(self):
-#        return self.username
+
+
+
+
+
+
     
 
 class UserIncubator(models.Model):

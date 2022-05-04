@@ -10,5 +10,5 @@ urlpatterns = [
 
             path('', views.index, name='index'),
             # path('login', views.login, name='login'),
-            path("data", views.packet, name='data'),
+            path('packet', views.packet, name='packet'),
            ]
