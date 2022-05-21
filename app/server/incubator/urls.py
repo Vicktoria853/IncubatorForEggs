@@ -11,4 +11,5 @@ urlpatterns = [
             path('', views.index, name='index'),
             # path('login', views.login, name='login'),
             path('packet', views.packet, name='packet'),
+            path('chart', views.chart, name='chart'),
            ]

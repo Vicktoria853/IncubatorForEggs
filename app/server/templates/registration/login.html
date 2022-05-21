@@ -1,28 +1,43 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+</head>
+
+<body>
+
 {% block content %}
-<style>
-div{
-background-color:lightblue;
-position: absolute;
-left: 30%;
-top:  20%;
-margin-left: -10px;
-margin-top: -10px;
-padding: 10px;
-}
-p{
-	text-decoration-thickness:5px;
+
+
+<div class="topnav">
+		<div style="position: relative; ">
+			<div>
+					<a href="/incubator"> Home</a>
+			</div>
+
+			<div>
+					<a href="/incubator/packet">Data</a>
+			</div>
+		</div>		
+		
+		<div style="position: absolute; right: 0px;">
+			<div>
+					<a class="active" href="/login"> Login</a>
+			</div>
+		</div>
+
+</div>
 
 
 
-} 
 
-</style>
-
-
+<div style="background-color:#337AFF; padding: 10px; position:absolute; right:40%; top: 100px">
 <div>
 <p>Login</p>
 	{% if form.errors %}
-
 		<p>Your username and password didn't match. Please try again.</p>
 	{% endif %}
 
@@ -42,23 +57,27 @@ p{
 
 <form method="post" action="{% url 'login' %}">
 	{% csrf_token %}
-	<table>	
+	<table style="background-color:#337AFF;">	
 		<tr>
-			<td>{{ form.username.label_tag }}</td>
+			<td style="background-color:#337AFF">{{ form.username.label_tag }}</td>
 			<td>{{ form.username }}</td>
 		</tr>
 		<tr>
-			<td>{{ form.password.label_tag }}</td>
+			<td style="background-color:#337AFF">{{ form.password.label_tag }}</td>
 			<td>{{ form.password }}</td>
 		</tr>
 	</table>
 
 
-<input type="submit" value="login" />
+<input style="padding: 5px 10px; margin: 10px 100px" type="submit" value="login" />
 <input type="hidden" name="next" value="{{ next }}" />
 
 </form>
 
 <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 </div>
-{%endblock %}
+</div>
+{% endblock %}
+
+</body>
+</html>

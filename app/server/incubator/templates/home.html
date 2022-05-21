@@ -1,23 +1,49 @@
-{% extends "nav_bar.html" %}
+{% load static %}
+<!DOCTYPE html>
 <html>
-	<head>
-	<style>
-h1{
-text-align: center;
+        <head>
+<title>Home</title>
+<link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
 
-
-
-}
-	</style>
-
-	</head>
+        </head>
 
 <body>
-	<h1>Hello</h1>
-	<div>
+<div class="topnav">
+		<div style="position: relative; ">
+			<div>
+					<a class="active" href="/incubator"> Home</a>
+			</div>
+
+			<div>
+					<a href="/incubator/packet">Data</a>
+			</div>
+		</div>		
 		
-	</div>
+		<div style="position: absolute; right: 0px;">
+			{% if user.is_authenticated %}
+			<div>
+					<a href="/logout"> Logout</a>
+			</div>
+			{% else %}
 
-</body>
+			<div>
+					<a href="/login"> Login </a>
+			</div>
+			{% endif %}
+		</div>
+
+</div>   
+
+
+
+{% if user.is_authenticated %}
+<h2 style="background-color:#337AFF; padding: 10px; position:absolute; right:40%; top: 100px">Hello, {{ user.get_username }}</h2>
+
+{% else %}
+<h2 style="background-color:#337AFF; padding: 10px; position:absolute; right:40%; top: 100px">Hello!</h2>
+
+{% endif %}
+
+
+    </body>
 </html>
-

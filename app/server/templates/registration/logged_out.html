@@ -1,6 +1,41 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+</head>
+
+<body>
+
+
+<div class="topnav">
+                <div style="position: relative; ">
+                        <div>
+                                 <a  href="/incubator"> Home</a>
+                        </div>
+
+                        <div>
+                                <a href="/incubator/packet">Data</a>
+                        </div>
+                </div>
+
+                <div style="position: absolute; right: 0px;">
+                        <div>
+                                        <a class="active" href="/logout"> Logout</a>
+                        </div>
+                </div>
+
+</div>
+
+<div style="background-color:#337AFF; padding: 10px; position:absolute; right:40%; top: 100px">
 {% block content %}
 
- <p>Logged out!</p>
+ <h1>Logged out!</h1>
 
-  <a href="{% url 'login'%}">Click here to login again.</a>
+  <a style="background-color: #183873; color: white; padding: 5px 10px" href="{% url 'login'%}">Click here to login again.</a>
   {% endblock %}
+</div>
+</body>
+</html>
