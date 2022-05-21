@@ -5,7 +5,7 @@ void printDisplay(){
     display.setTextSize(1);             // Normal 1:1 pixel scale
     display.setTextColor(SSD1306_WHITE);        // Draw white text
     display.setCursor(0,0);
-    //display.println(currentTime);
+    display.println(currentTime);
 
     display.print("Temperature: ");
     dryTemp = getTemp(pinDB);
@@ -27,8 +27,15 @@ void printDisplay(){
     display.println("Encoder was pressed");
     display.println(tempMode[now.day()%22][5] + 0.1*counter);
     }
-    
-
+    if(oldCounter - counter != 0){
+      if(oldCounter - counter > 0){
+        display.println("Right");
+        }
+        else{
+          display.println("Left");
+          }
+       //oldCounter = counter;
+      }
     display.display();
   }
 

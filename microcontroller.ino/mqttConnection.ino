@@ -10,17 +10,27 @@ void receivedCallback(char* topic, byte* payload, unsigned int length) {
 }
 
 void mqttconnect() {
-  while (!client.connected()) {
+  wifiWaiting = millis();
+  while (!client.connected()){
+    
+  if (WiFi.status() != WL_CONNECTED) {
+  WiFi.begin(ssid, password);
+  }
+      
     Serial.print("MQTT connecting ...");
-//    String clientId = "ESP32Client";
 
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
+      //okToSent = 1;
       client.subscribe("Incubator");
     } else {
       Serial.print("failed, status code =");
-      Serial.print(client.state());
-      Serial.println("try again in 5 seconds");
+      Serial.println(client.state());
+//      if(wifiWaiting + 5000 < millis()){
+//           Serial.println("Could not connect");
+//           okToSent = 0;
+//           break;
+//        }
       delay(500);
     }
 
@@ -50,24 +60,25 @@ void setting() {
 }
 
 void Sent(){
-    if (!client.connected()) {
+   // if (!client.connected()) {
     mqttconnect();
-  }
+  //}
   client.loop();
 
-  
-  //snprintf (msg, 100, "%u %u %f %f %f %u %s",id, idSeq++, temperature, RelativeHumidity, humiditySensor, eggTurning, currentTime);
- snprintf (msg, 100, "%u %u %f %f %f %u %s",1, 1, 12.3, 12.3, 12.3, 0, "12:13 09:18:08");
-  if(eggTurning == 1){
-    eggTurning = 0;
-    }
-    //client.publish("test", msg);
-  
-  client.publish("Incubator", msg);
-  Serial.print("Sent message: ");
-  Serial.println(msg);
+    //if(okToSent == 1){
+      snprintf(msg, 100, "%u %u %f %f %f %u %s",id, idSeq++, temperature, RelativeHumidity, humiditySensor, eggTurning, currentTime);
+    // snprintf(msg, 100, "%u %u %f %f %f %u %s",1, idSeq++, 12.3564577, 12.3, 12.3, 0, "12:13 09:18:08");
+      if(eggTurning == 1){
+        eggTurning = 0;
+        }
+      
+      client.publish("Incubator", msg);
+      Serial.print("Sent message: ");
+      Serial.println(msg);
+    //}
   }
-  
+
+  //snprintf (msg, 100, "%u %u %f %f %f %u %s",1, 1, 12.3, 12.3, 12.3, 0, "12:13 09:18:08");
 
 
 //void Packeting(uint16_t idSeq, float temp, float rh, float humidSensor, uint8_t eggTurning, String currentTime){

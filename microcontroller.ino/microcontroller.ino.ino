@@ -18,6 +18,7 @@ uint8_t pinDB = 34;
 uint8_t pinWB = 35;
 uint8_t pinHeater = 25;
 uint8_t pinEggTurner = 26;
+uint8_t pinFan = 27;
 
 
 ///////////////
@@ -32,6 +33,7 @@ uint8_t outputB  = 13;
 
 // encoder
 int counter = 0;
+int oldCounter = 0;
 int aState;
 int aLastState;
 int bnt_was_pressed;
@@ -88,9 +90,16 @@ uint8_t stepCircle;
 uint8_t i;
 
 unsigned long lastEggTurning;
-int period = 2700000;//45 * 60 * 1000;
+int period = 20000;///2700000;//45 * 60 * 1000;
 
 unsigned long lastStep;
+unsigned long currTime;
+
+unsigned long wifiWaiting;
+uint8_t okToSent = 1;
+
+
+
  
  float helper;
  DateTime now;
@@ -160,11 +169,14 @@ unsigned long lastStep;
  int computePID(float input, float setpoint, float kp, float ki, float kd, float dt, int minOut, int maxOut);
  void menu();
  void draw(float a);
+ void Step();
 
 void setup(){
   pinMode(pinEncoder, INPUT_PULLUP);
   pinMode(pinDB, INPUT);
   pinMode(pinWB, INPUT);
+  pinMode(pinFan, OUTPUT);
+  digitalWrite(pinFan, HIGH);
   aLastState = digitalRead(outputA);
   Serial.begin(115200);
       Wire.begin(5, 4);
@@ -206,7 +218,9 @@ lastStep = millis();
 //mqttconnect();
   }
 void loop() {
-  if(lastStep + 300 < millis()){
+  Serial.println("Loop...");
+  currTime = millis();
+  if(lastStep + 300 < currTime){
     Step();
     }
 
@@ -218,12 +232,10 @@ if (lastEggTurning + period < millis()){
   }
 
 //  if(bnt_was_pressed == 1){
-//    
-//    
-//    
+//    menu();
 //    }
 
-//digitalWrite(pinHeater, HIGH);
+
 printDisplay();
 
 }
